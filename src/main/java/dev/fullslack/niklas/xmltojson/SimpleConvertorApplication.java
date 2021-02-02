@@ -1,10 +1,14 @@
-package dev.fullslack;
+package dev.fullslack.niklas.xmltojson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
 
-public class SimpleConvertor {
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class SimpleConvertorApplication {
 
     private static final int INDENTATION = 4;
     private static final String XML_STRING =
@@ -32,12 +36,28 @@ public class SimpleConvertor {
 
     public static void main(String[] args) {
         try {
-            JSONObject jsonObject = XML.toJSONObject(XML_STRING);
-            String json = jsonObject.toString(INDENTATION);
+            xmlStringToJson();
+            xmlFileToJson("D:/Java/companies");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
-            System.out.println(json);
-        } catch (JSONException ex) {
-            ex.printStackTrace();
+    private static void xmlStringToJson() throws JSONException {
+        JSONObject jsonObject = XML.toJSONObject(XML_STRING);
+        String json = jsonObject.toString(INDENTATION);
+
+        System.out.println(json);
+    }
+
+    private static void xmlFileToJson(String fileName) throws JSONException {
+        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(fileName + ".json"));
+             BufferedReader reader = Files.newBufferedReader(Paths.get(fileName + ".xml"))) {
+            JSONObject jsonObject = XML.toJSONObject(reader);
+
+            writer.write(jsonObject.toString(INDENTATION));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
