@@ -1,5 +1,6 @@
 package dev.fullslack.niklas.xmltojson;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
@@ -7,6 +8,7 @@ import org.json.XML;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class SimpleConvertorApplication {
 
@@ -36,7 +38,7 @@ public class SimpleConvertorApplication {
 
     public static void main(String[] args) {
         try {
-            xmlStringToJson();
+//            xmlStringToJson();
             xmlFileToJson("D:/Java/companies");
         } catch (JSONException e) {
             e.printStackTrace();
@@ -54,6 +56,14 @@ public class SimpleConvertorApplication {
         try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(fileName + ".json"));
              BufferedReader reader = Files.newBufferedReader(Paths.get(fileName + ".xml"))) {
             JSONObject jsonObject = XML.toJSONObject(reader);
+            JSONArray jsonArray = jsonObject.getJSONObject("companies").getJSONArray("company");
+            AtomicInteger id = new AtomicInteger(1);
+            jsonArray.forEach(item -> {
+                JSONObject company = (JSONObject) item;
+                company.remove("uuid");
+                company.put("id", Integer.parseInt(id.toString()));
+                id.incrementAndGet();
+            });
 
             writer.write(jsonObject.toString(INDENTATION));
         } catch (IOException e) {
