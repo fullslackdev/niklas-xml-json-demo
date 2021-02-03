@@ -14,6 +14,7 @@
         <java.version>11</java.version>
         <json.version>20201115</json.version>
         <jaxb.version>3.0.0</jaxb.version>
+        <javafaker.version>1.0.2</javafaker.version>
 
     </properties>
 
@@ -29,6 +30,12 @@
             <groupId>org.glassfish.jaxb</groupId>
             <artifactId>jaxb-runtime</artifactId>
             <version>${jaxb.version}</version>
+        </dependency>
+        <!-- Java Faker dependency -->
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>${javafaker.version}</version>
         </dependency>
     </dependencies>
 
