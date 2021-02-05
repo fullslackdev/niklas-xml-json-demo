@@ -39,7 +39,7 @@ public class SimpleConvertorApplication {
     public static void main(String[] args) {
         try {
 //            xmlStringToJson();
-            xmlFileToJson("D:/Java/companies");
+            xmlFileToJson("target/companies");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -61,6 +61,7 @@ public class SimpleConvertorApplication {
             jsonArray.forEach(item -> {
                 JSONObject company = (JSONObject) item;
                 company.remove("uuid");
+                company.remove("url");
                 company.put("id", Integer.parseInt(id.toString()));
                 id.incrementAndGet();
             });

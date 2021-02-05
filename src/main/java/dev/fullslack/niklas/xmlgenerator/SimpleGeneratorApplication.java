@@ -63,7 +63,7 @@ public class SimpleGeneratorApplication {
         jaxbMarshaller.marshal(companies, System.out);
 
         // Marshal the companies list to file
-        jaxbMarshaller.marshal(companies, new File("D:/Java/companies.xml"));
+        jaxbMarshaller.marshal(companies, new File("target/companies.xml"));
     }
 
     private static Company companyFaker() {
